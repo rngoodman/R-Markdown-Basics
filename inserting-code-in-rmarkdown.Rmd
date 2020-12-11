@@ -141,9 +141,28 @@ ggarrange(uk_plot, euro_plot, ncol = 2, nrow = 1, labels = c("A", "B"))
 
 ```
 
+# Send to Github
+
+First render files to publish files in Github using the follwoing commands
 
 `rmarkdown::render("inserting-code-in-rmarkdown.Rmd")`
 `rmarkdown::render("index.Rmd")`
+
+To download git first go to [here](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN)
+
+1. Then click Tools > Version Control > Project set up Git
+2. If asked whether you want to initialise a new Git repository for this project, click Yes.
+3. If asked whether RStudio needs to be restarted, click Yes.
+4. Next we need to configure Git. Go to Tools > Shell. This should take you to the Terminal window in RStudio. Make sure you are first in the working directory of your project (use getwd() to check that). Then set the Git username and email using the following two commands:
+
+```
+git config --global user.name "yourGitHubUsername"
+git config --gloabl user.email "name@provider.com"
+```
+5. Next create a repository in GitHub.
+6. After you click on the Create repository button, a Quick setup page is displayed which provides code for different scenarios. Copy the first line of the “…or push an existing repository from the command line” section and run it in the RStudio terminal. The line of code should look something like this: `git remote add origin https://github.com/Another-Goodman/R-Markdown-Basics.git`
+7. From the Git tab in RStudio, select the files you would like to commit to GitHub.
+8. Press the Commit button, enter a commit message and then press the Commit button in the new pop-up commit window.
 
 
 
