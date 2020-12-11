@@ -1,0 +1,248 @@
+---
+outpur_dir: "."
+title: "Basic RMarkdown Syntax and Formatting"
+author: "Richard Goodman"
+date: "11 December 2020"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+\ 
+
+# R Markdown
+
+\ 
+
+## Headings
+
+
+<!-- This is a comment --> 
+
+<!-- Headings sections --> 
+
+# Heading 1{#heading-1}
+
+## Heading 2 
+
+### Heading 3 
+
+#### Heading 4
+
+\
+
+<!-- press knit to check document  --> 
+
+\
+
+## Inline text formatting
+
+to make bold use **double asteriks** or __double underscore__
+
+to make text italic use *asteriks* or _underscore_
+
+to make text superscript use ^caret^
+
+to make text subscript use ~tilde~
+
+to mark text as inline code `backticks` 
+
+To make text strikethrough use ~~double tilde~~
+
+
+<!-- press knit to check document  --> 
+
+\
+
+## Line Breaks 
+
+This test is 
+<!-- For a line break  --> 
+
+\ 
+
+broken by a backslash
+
+\
+
+## Links
+
+
+Link to a webpage: [Link to shared document](https://docs.google.com/document/d/1N8gPLlwWvviLO4S4v5DgsZrafEeV2r4IeHu3KHDrWNc/edit). You have to open in browser to make it work. 
+
+
+Links to headings within this document: Link to [Heading 1](#heading-1). Make sure you have marked the heading you want to send this to. 
+
+\ 
+
+## Footnotes
+
+To indicate a footnte use[^1] and second footnote[^2]. The footnotes will always be at the bottom of the page regardless of where they are in the Markdown page. 
+
+[^1]: This is the first footnote
+[^2]: This is the second footnote
+
+
+\ 
+
+## Lists
+
+
+\ 
+
+### Ordered lists
+
+For sublists use 4 spaces to indent item 
+
+1. Item 1
+2. Item 2 
+3. Item 3
+  a. Item 3a
+    i. Item 3ai
+  b. Item 3b
+4. Item 4     
+
+\ 
+
+### Unordered Lists 
+
+You can use (*, +, -)
+
+* Item 1
+* Item 2 
+  * Item 2.1 
+* Item 3
+
+\ 
+
+### Task Lists 
+
+It does not render on RStudio but it will render on Github 
+
+-[] an unchecked item
+-[x] a checked item 
+
+
+\ 
+
+## Inserting Figures
+
+
+To insert an image use the following syntax: `![Figure caption](path to image)`. Example:
+
+![R Logo](img/R-logo.png)
+
+
+\ 
+
+## Tables
+
+Use `|` and `-` to create a table as follows:
+
+| Column 1    | Column 2    |
+| ----------- | ----------- |
+| Item 1,1    | Item 1,2    |
+| Item 2,1    | Item 2,2    |
+
+\ 
+
+| left align   | Center align  | Right align  |
+| :----------- | :-----------: | -----------: |
+| Item 1,1     | Item 1,2      | Item 1,3     |
+| Item 2,1     | Item 2,2      | Item 2,3     |
+
+
+\ 
+
+
+## Blocks 
+
+Blocks in the notebook can be created by using the `>` sign as follows: `> Example of a block`
+
+This is rendered as:
+
+> Example of a block
+
+> some text
+
+To add a code block use ` ``` `
+
+```
+print("Hello World")
+x = 1 + 2
+print(x)
+
+```
+
+\ 
+
+
+## Table of contents
+
+Adding a table of contents, go back to top and add the following text to your YAML header
+
+```
+output:
+  html_document:
+    toc: true
+```
+
+By default only headings down to Heading 3 are shown in the table of contents, use `toc_depth`
+to change the level to Heading 4 
+
+```
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+```
+
+To move the table of contents to the right and make it visually appealing
+
+```
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+```
+
+## Adding references 
+
+Adding references and citations in Markdown is not as easy as reference manager software such as Mendeley
+
+First download a bibliography from [here]() called references.bib in your working directory 
+
+Go back to YAML header 
+
+```
+bibliography: references.bib
+link-citations: yes
+```
+
+Your YAML header should now look like this:
+
+```
+title: "Basic RMarkdown Syntax and Formatting"
+author: "Richard Goodman"
+date: "11 December 2020"
+bibliography: references.bib
+link-citations: yes
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+```
+
+To cite a paper use `@cardona2019` and `@cardona2014` which gives @cardona2019 and @cardona2014
+
+\ 
+
+## References
+
+
+
+
+

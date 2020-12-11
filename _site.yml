@@ -1,0 +1,10 @@
+outpur_dir: "."
+name: "My Markdown Notebook"
+navbar:
+  title: "My Markdown Notebook"
+  left:
+    - text: "Markdown Basics"
+      href: index.html
+    - text: "Analysis"
+      href: inserting-code-in-rmarkdown.html
+

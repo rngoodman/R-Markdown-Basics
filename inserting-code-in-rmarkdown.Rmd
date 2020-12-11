@@ -1,0 +1,150 @@
+---
+outpur_dir: "."
+title: "Inserting R Code in Markdown"
+author: "Richard Goodman"
+date: "11 December 2020"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+---
+
+\ 
+
+# Importing and manipulating Data
+
+First make sure there is a folder called data in your wd
+
+Let us download the `gapminder_data.csv` dataset into our project
+
+```{r download-file, message = FALSE}
+
+download.file(url="https://raw.githubusercontent.com/cambiotraining/reproducibility-training/master/data/gapminder_data.csv", destfile="data/gapminder_data.csv")
+
+```
+
+Start to load the dataset 
+
+```{r load-data, message=FALSE, warning = FALSE}
+
+# Load all libraries
+library(tidyverse) # use for data manipulation and visualisation
+library(kableExtra) # used for kbl()
+library(rmarkdown) # used for paged_table function
+library(ggpubr) #used for ggarrange function
+
+# read file into R 
+pop_data = read_csv("data/gapminder_data.csv")
+
+# create a table with data from Euro countries in 2007 - ordered by life expectancy 
+euro_data_tbl = pop_data %>% 
+  # Filter by continent and year 
+  filter(continent == "Europe" & year == 2007) %>% 
+  # remove continent and year (since they are all the same)
+  select(-continent, -year) %>% 
+  # arrange by life expecntancy 
+  arrange(desc(lifeExp)) %>% 
+  # Rename columns names to how we want them 
+  rename(Country = country, 
+         "Population size" = pop, 
+         "Life Expectancy" = lifeExp,
+         "GDP" = gdpPercap)
+
+
+
+
+
+```
+
+\ 
+
+# Tables in R Markdown
+
+We will use the `kableExtra` package to design some tables. The vignette for kableExtra can be found [here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html
+)
+
+The results in euro_data_tbl are displayed in the table below:
+
+
+```{r Making tables with kable}
+
+euro_data_tbl %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("striped", full_width = F)) %>% 
+                  scroll_box(width = "100%", height = "200px" )
+
+```
+
+A better way to display long tables is using the function `paged_table()` in the `rmarkdown` library can be used to do this
+
+```{r paged-table}
+
+paged_table(euro_data_tbl)
+
+```
+
+\ 
+
+# Adding images
+
+Adding images is straightforward and does not require using a specific R Markdown function.
+
+Create a new dataset `euro_data_fig` by filtering the `pop_data` tibble to contain only data from Europe. Draw a plot to display the `lifeExp` on the y axis and `year` on the x axis. Use `geom_violin()` to draw this as a violin plot to show the distrubution of the data across each year and save it in a `1euro_plot` variable.
+
+```{r adding ggplot images}
+
+euro_plot = pop_data %>% 
+  filter(continent == "Europe") %>% 
+  select(-continent) %>% 
+  # Add factor() to ensure year is treated as discrete 
+  ggplot(aes(x = factor(year), y = lifeExp)) +
+  # use geom_violin
+  geom_violin() +
+  # plot the median as a point on the violin 
+  stat_summary(fun = median, geom = "point") +
+  ylim(40, 85)
+
+# display plot 
+euro_plot
+
+```
+
+ 
+
+Create a new dataset `uk_data_fig` by filtering the `pop_data` tibble to contain only data from the United Kingdom. Draw a scatter plot to display the `lifeExp` on the y axis and `year` on the x axis and save it in a `uk_plot` variable.
+Draw the `euro_plot` created in the previous challenge next to a `uk_plot` using the `ggarrange()` function. Label the plots A and B respectively.
+
+```{r adding multiple-plots }
+
+uk_plot = pop_data %>% 
+  # filter for United Kingdom 
+  filter(country == "United Kingdom") %>%
+  # use mutate to convert year to factor 
+  mutate(year = as_factor(year)) %>% 
+  # Plot a scatterplot with geom_point
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_point() +
+  ylim(40, 85)
+
+# display plot 
+uk_plot
+
+```
+
+ggarrage() is a function present in the ggpubr pacakge that can place two or more figures next to each other
+
+```{r}
+
+# Use ggarrange to arrange the uk_plot and euro_plot 
+ggarrange(uk_plot, euro_plot, ncol = 2, nrow = 1, labels = c("A", "B"))
+
+```
+
+
+`rmarkdown::render("inserting-code-in-rmarkdown.Rmd")`
+`rmarkdown::render("index.Rmd")`
+
+
+
+
